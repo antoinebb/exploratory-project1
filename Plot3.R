@@ -1,0 +1,10 @@
+data <- read.csv("household_power_consumption.txt", sep=";", na.strings = "?", header=T, colClasses = c("character", "character", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric"))
+data_sub<- subset(data, as.character(data$Date) == "1/2/2007" | as.character(data$Date) == "2/2/2007")
+data_sub2 <- as.POSIXct(paste(data_sub$Date, data_sub$Time, sep=" "), format="%d/%m/%Y %H:%M:%S")
+plot(data_sub[,7] ~ data_sub2, type="l", pch=".", xlab="", ylab="Energy Sub Metering")
+lines(data_sub[,8] ~ data_sub2, col="red")
+lines(data_sub[,9] ~ data_sub2, col="blue")
+legend("topright", lty=1, col = c("black", "blue", "red"), legend = c("Sub_metering_1", "Sub_metering_2", "Sub_metering_3"))
+dev.copy(png, file = "Plot3.png",height=480, width=480)
+dev.off()
+
